@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   postgresql:
     build: ./postgresql
@@ -10,8 +8,15 @@ services:
     build: ./airflow
     ports:
       - '8080:8080'
+    volumes:
+      - ./scheduler/dags:/opt/bitnami/airflow/dags
+
   scheduler:
     build: ./scheduler
+    volumes:
+      - ./scheduler/dags:/opt/bitnami/airflow/dags 
 
   worker:
     build: ./worker
+    volumes:
+      - ./scheduler/dags:/opt/bitnami/airflow/dags
